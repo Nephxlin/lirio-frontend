@@ -74,9 +74,9 @@ export default function Header({ onOpenDeposit, onOpenWithdraw, onOpenLogin, onO
                   backgroundSize: '200% auto',
                 }}
               >
-                CASINO
+                BET
               </h1>
-              <p className="text-[10px] text-gold-400 font-semibold">Premium Gaming</p>
+              <p className="text-[10px] text-gold-400 font-semibold">347</p>
             </div>
           </Link>
 
