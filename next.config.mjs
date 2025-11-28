@@ -1,6 +1,5 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   // Otimização de imagens
   images: {
     unoptimized: true, // Desabilitar otimização para evitar problemas em produção
@@ -38,3 +37,4 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
+
