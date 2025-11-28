@@ -308,3 +308,4 @@ Se todos os passos acima funcionaram:
 **Pixel ID:** 296262408561528  
 **Status:** ✅ Configurado e Testado
 
+

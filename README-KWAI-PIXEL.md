@@ -239,3 +239,4 @@ sessionStorage.getItem('kwai_clickid')
 
 👉 **Leia o [KWAI-GUIA-RAPIDO.md](./KWAI-GUIA-RAPIDO.md) para começar agora!**
 
+

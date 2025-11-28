@@ -291,3 +291,4 @@ trackInitiatedCheckout(
 **Pixel ID:** 296262408561528  
 **Status:** ✅ Eventos Corrigidos e no Lugar Certo
 
+

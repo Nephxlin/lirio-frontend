@@ -249,3 +249,4 @@ https://seusite.com?debug=true&kpid=SEU_PIXEL_ID_REAL&clickid=CLICKID_REAL
 **Versão:** 2.0 (Reescrita Completa)  
 **Status:** ✅ Totalmente Funcional
 
+

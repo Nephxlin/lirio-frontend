@@ -248,3 +248,4 @@ Click ID: 0D0NElE9N8onlSxVmaAuGA  ← Para teste de eventos
 **Data:** 28 de Novembro de 2025  
 **Versão:** 5.0 (Correção Pixel ID vs Click ID)
 
+

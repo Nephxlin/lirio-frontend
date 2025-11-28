@@ -186,3 +186,4 @@ http://localhost:3006?debug=true&kpid=0D0NElE9N8onlSxVmaAuGA&clickid=0D0NElE9N8o
 
 Cole no navegador, aguarde 5 segundos, e veja o status mudar para 🟢!
 
+

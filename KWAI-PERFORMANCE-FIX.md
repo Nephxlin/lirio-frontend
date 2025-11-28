@@ -220,3 +220,4 @@ Tamanho: ~20kb
 **Performance:** ⚡ Muito Rápido  
 **Status:** ✅ Implementado
 
+

@@ -434,3 +434,4 @@ Sempre use `trackPurchase` para conversões reais!
 
 ✅ **Implementação completa!** Agora você pode rastrear conversões do Kwai diretamente no seu frontend Next.js.
 
+

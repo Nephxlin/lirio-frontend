@@ -237,3 +237,4 @@ Para mais detalhes, veja: `KWAI-PIXEL-DOCS.md`
 
 Para dúvidas, veja a documentação completa em `KWAI-PIXEL-DOCS.md`
 
+

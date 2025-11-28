@@ -264,3 +264,4 @@ http://localhost:3006/home?kpid=SEU_PIXEL_ID
 
 Todos os eventos agora são disparados com confiança, mesmo se o SDK ainda estiver carregando.
 
+

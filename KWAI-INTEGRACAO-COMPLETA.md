@@ -455,3 +455,4 @@ Para dúvidas, veja:
 - [KWAI-GUIA-RAPIDO.md](./KWAI-GUIA-RAPIDO.md) - Guia rápido
 - [KWAI-INDEX.md](./KWAI-INDEX.md) - Índice de toda documentação
 
+

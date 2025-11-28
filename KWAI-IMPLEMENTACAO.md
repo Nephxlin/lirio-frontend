@@ -335,3 +335,4 @@ O Kwai Pixel foi implementado seguindo as melhores práticas e a documentação 
 
 Para começar rapidamente, veja: **`KWAI-GUIA-RAPIDO.md`**
 
+

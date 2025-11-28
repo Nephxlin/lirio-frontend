@@ -280,3 +280,4 @@ Kwai Pixel Helper deve mostrar:
 **Data:** 28 de Novembro de 2025  
 **Versão:** 4.0 (Troubleshooting Guide)
 
+

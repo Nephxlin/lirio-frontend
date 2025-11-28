@@ -204,3 +204,4 @@ Você verá este aviso (normal):
 http://localhost:3006/home?kpid=SEU_PIXEL_ID_REAL&clickid=TEST123
 ```
 
+

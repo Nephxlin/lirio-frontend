@@ -276,3 +276,4 @@ http://localhost:3006?kwai_pixel=TEST_ID&clickid=TEST123&mmpcode=PL
 **Versão**: 1.0.0  
 **Status**: ✅ Produção Ready
 
+

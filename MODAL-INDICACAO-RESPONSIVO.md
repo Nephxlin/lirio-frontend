@@ -381,3 +381,4 @@ className="flex-shrink-0"  // Não encolhe
 **Pronto para produção:** Sim
 
 
+

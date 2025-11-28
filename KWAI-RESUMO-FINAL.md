@@ -313,3 +313,4 @@ Você agora tem:
 **Versão**: 2.0.0 (com re-purchase)  
 **Status**: ✅ **PRODUÇÃO READY**
 
+

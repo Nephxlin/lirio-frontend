@@ -146,3 +146,4 @@ console.log('✅ [Kwai Pixel] Loader instalado (beforeInteractive)');
   )
 }
 
+
