@@ -6,7 +6,7 @@
     "dev": "next dev -p 3006",
     "build": "next build",
     "build:analyze": "ANALYZE=true next build",
-    "start": "next start -p 3006",
+    "start": "next start",
     "lint": "next lint",
     "lighthouse": "lhci autorun || echo 'Lighthouse CI não instalado. Execute: npm install -g @lhci/cli'"
   },

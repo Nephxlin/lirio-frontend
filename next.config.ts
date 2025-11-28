@@ -3,29 +3,15 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   // Otimização de imagens
   images: {
-    // Desabilitar otimização de imagens externas temporariamente
-    // Isso resolve o erro mas mantém lazy loading
-    unoptimized: false,
+    unoptimized: true, // Desabilitar otimização para evitar problemas em produção
     remotePatterns: [
       {
         protocol: 'http',
-        hostname: 'localhost',
-        port: '3005',
-        pathname: '/uploads/**',
-      },
-      {
-        protocol: 'http',
-        hostname: 'localhost',
-        port: '3000',
-        pathname: '/**',
-      },
-      {
-        protocol: 'http',
-        hostname: 'localhost',
+        hostname: '**', // Aceitar qualquer domínio HTTP
       },
       {
         protocol: 'https',
-        hostname: '**',
+        hostname: '**', // Aceitar qualquer domínio HTTPS
       },
     ],
     formats: ['image/webp', 'image/avif'],
