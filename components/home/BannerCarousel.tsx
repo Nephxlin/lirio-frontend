@@ -7,6 +7,7 @@ import { Banner } from '@/types'
 import api from '@/lib/api'
 import { motion } from 'framer-motion'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { getImageUrl } from '@/lib/image-utils'
 
 // Import Swiper styles
 import 'swiper/css'
@@ -80,7 +81,7 @@ export default function BannerCarousel() {
               }}
             >
               <img
-                src={`http://localhost:3005/uploads/${banner.image}`}
+                src={getImageUrl(banner.image)}
                 alt={banner.title}
                 className="w-full h-full object-cover"
                 onError={(e) => {

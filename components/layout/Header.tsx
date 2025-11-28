@@ -21,6 +21,7 @@ import {
 import { formatCurrency, getInitials } from '@/lib/utils'
 import { motion, AnimatePresence } from 'framer-motion'
 import RolloverProgress from '@/components/wallet/RolloverProgress'
+import { getImageUrl } from '@/lib/image-utils'
 
 interface HeaderProps {
   onOpenDeposit?: () => void
@@ -200,7 +201,7 @@ export default function Header({ onOpenDeposit, onOpenWithdraw, onOpenLogin, onO
                   >
                     {user.avatar ? (
                       <img
-                        src={`http://localhost:3000${user.avatar}`}
+                        src={getImageUrl(user.avatar)}
                         alt={user.name}
                         className="w-full h-full rounded-full object-cover"
                       />

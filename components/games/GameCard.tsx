@@ -11,6 +11,7 @@ import api from '@/lib/api'
 import toast from 'react-hot-toast'
 import { slugify } from '@/lib/utils'
 import OptimizedImage from '@/components/common/OptimizedImage'
+import { getImageUrl } from '@/lib/image-utils'
 
 interface GameCardProps {
   game: Game
@@ -104,11 +105,7 @@ export default function GameCard({ game, onFavoriteChange, onOpenRegister }: Gam
       {/* Imagem do Jogo */}
       <div className="relative aspect-[3/4] overflow-hidden bg-gradient-to-br from-dark-200 to-dark-300">
         <OptimizedImage
-          src={
-            game?.cover
-              ? `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3005'}/uploads/${game.cover}`
-              : '/placeholder-game.png'
-          }
+          src={game?.cover ? getImageUrl(game.cover) : '/placeholder-game.png'}
           alt={game?.name || 'Game'}
           fill
           sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 20vw"

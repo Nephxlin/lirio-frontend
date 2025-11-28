@@ -9,6 +9,7 @@ import { formatCurrency } from '@/lib/utils'
 import api from '@/lib/api'
 import toast from 'react-hot-toast'
 import GameWinsCarousel from '@/components/games/GameWinsCarousel'
+import { getImageUrl } from '@/lib/image-utils'
 
 interface Game {
   id: number
@@ -248,11 +249,7 @@ export default function GamePage() {
                   <div className="flex flex-col items-center gap-2">
                     <div className="w-full aspect-square rounded-lg overflow-hidden border border-gold-500/30 bg-dark-300">
                       <img
-                        src={
-                          game.cover
-                            ? `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3005'}/uploads/${game.cover}`
-                            : '/placeholder-game.png'
-                        }
+                        src={game.cover ? getImageUrl(game.cover) : '/placeholder-game.png'}
                         alt={game.name}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                         onError={(e) => {

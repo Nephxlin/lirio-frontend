@@ -1,8 +1,12 @@
 import axios, { AxiosError } from 'axios'
 import toast from 'react-hot-toast'
 
+// Exportar URL base da API (sem /api) para uso em imagens
+export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3005'
+export const API_URL = `${API_BASE_URL}/api`
+
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3005/api',
+  baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',
   },

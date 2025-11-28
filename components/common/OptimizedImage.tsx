@@ -34,9 +34,9 @@ export default function OptimizedImage({
 }: OptimizedImageProps) {
   const [imageError, setImageError] = useState(false)
   
-  // Detectar se é imagem externa (do backend)
-  const isExternalImage = src?.startsWith('http://localhost:3005') || 
-                          src?.startsWith('http://localhost:3000') ||
+  // Detectar se é imagem externa (do backend ou URL completa)
+  const isExternalImage = src?.startsWith('http://') || 
+                          src?.startsWith('https://') ||
                           src?.includes('/uploads/')
 
   // Placeholder padrão
