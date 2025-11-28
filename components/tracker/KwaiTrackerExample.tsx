@@ -11,37 +11,28 @@ import { useEffect } from 'react'
  */
 export function KwaiTrackerExample() {
   const {
-    trackPageView,
+    trackContentView,
     trackInitiatedCheckout,
     trackPurchase,
-    trackAddToCart,
     trackCompleteRegistration,
-    hasClickId,
-    getCampaignInfo,
   } = useKwaiTracker()
 
   // Exemplo 1: Rastrear visualização de página ao montar o componente
   useEffect(() => {
-    trackPageView({
+    trackContentView({
       content_name: 'página_inicial',
       content_type: 'home',
     })
-  }, [trackPageView])
+  }, [trackContentView])
 
   // Exemplo 2: Rastrear abertura do modal de depósito
   const handleOpenDepositModal = (amount: number) => {
-    trackInitiatedCheckout(amount, {
-      content_name: 'modal_deposito',
-      content_type: 'deposit',
-    })
+    trackInitiatedCheckout(amount, 'CHECKOUT-' + Date.now(), 'BRL')
   }
 
   // Exemplo 3: Rastrear depósito concluído
   const handleDepositSuccess = (amount: number, transactionId: string) => {
-    trackPurchase(amount, transactionId, {
-      content_name: 'deposito_concluido',
-      payment_method: 'pix',
-    })
+    trackPurchase(amount, transactionId, 'BRL')
   }
 
   // Exemplo 4: Rastrear registro de usuário
@@ -54,11 +45,14 @@ export function KwaiTrackerExample() {
 
   // Exemplo 5: Verificar se tem campanha ativa
   useEffect(() => {
-    if (hasClickId()) {
-      const campaignInfo = getCampaignInfo()
-      console.log('Usuário veio de campanha Kwai:', campaignInfo)
+    const hasClickId = typeof window !== 'undefined' && sessionStorage.getItem('kwai_clickid')
+    if (hasClickId) {
+      const clickid = sessionStorage.getItem('kwai_clickid')
+      const mmpcode = sessionStorage.getItem('kwai_mmpcode')
+      const pixelId = sessionStorage.getItem('kwai_pixel_id')
+      console.log('Usuário veio de campanha Kwai:', { clickid, mmpcode, pixelId })
     }
-  }, [hasClickId, getCampaignInfo])
+  }, [])
 
   return (
     <div className="p-4 space-y-4">
@@ -90,18 +84,15 @@ export function KwaiTrackerExample() {
       <div className="mt-4 p-4 bg-gray-100 rounded">
         <p className="text-sm">
           <strong>Campanha Ativa:</strong>{' '}
-          {hasClickId() ? 'Sim ✅' : 'Não ❌'}
+          {typeof window !== 'undefined' && sessionStorage.getItem('kwai_clickid') ? 'Sim ✅' : 'Não ❌'}
         </p>
-        {hasClickId() && (
-          <pre className="mt-2 text-xs">
-            {JSON.stringify(getCampaignInfo(), null, 2)}
-          </pre>
-        )}
       </div>
     </div>
   )
 }
 
 export default KwaiTrackerExample
+
+
 
 

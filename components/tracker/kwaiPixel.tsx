@@ -7,14 +7,6 @@ interface KwaiPixelProps {
   pixelId?: string
 }
 
-// Declaração global do Kwai Analytics
-declare global {
-  interface Window {
-    kwaiq: any
-    KwaiAnalyticsObject: string
-  }
-}
-
 export function KwaiPixel({ pixelId: propPixelId }: KwaiPixelProps) {
   useEffect(() => {
     // Salvar parâmetros da URL

@@ -64,8 +64,8 @@ export function KwaiWrapper() {
       <KwaiPixelHead pixelId={pixelId} />
       
       {/* Trackers adicionais */}
-      <KwaiRepurchaseTracker pixelId={pixelId} debug={debugMode} />
-      {debugMode && <KwaiDebugPanel pixelId={pixelId} />}
+      <KwaiRepurchaseTracker />
+      {debugMode && <KwaiDebugPanel />}
     </>
   )
 }

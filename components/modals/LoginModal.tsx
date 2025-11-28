@@ -52,7 +52,7 @@ interface LoginModalProps {
 
 export default function LoginModal({ isOpen, onClose, initialMode = 'register', referralCode, referrerInfo }: LoginModalProps) {
   const { login, register: registerUser } = useAuth()
-  const { trackCompleteRegistration } = useKwaiTracker()
+  const { trackCompleteRegistration, trackContentView } = useKwaiTracker()
   const [mode, setMode] = useState<'login' | 'register'>(initialMode)
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
@@ -65,7 +65,8 @@ export default function LoginModal({ isOpen, onClose, initialMode = 'register', 
       setMode(referralCode ? 'register' : initialMode)
       loadSignupBonus()
     }
-  }, [isOpen, initialMode, referralCode])
+    trackContentView({ content_name: 'modal_login' })
+  }, [isOpen, initialMode, referralCode, trackContentView])
 
   const loadSignupBonus = async () => {
     try {
