@@ -1,0 +1,11 @@
+{
+  "name": "Casino - Jogue e Ganhe",
+  "short_name": "Casino",
+  "description": "O melhor cassino online do Brasil",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#18181b",
+  "theme_color": "#18181b",
+  "icons": []
+}
+

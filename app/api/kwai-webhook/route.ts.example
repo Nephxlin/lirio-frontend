@@ -1,0 +1,118 @@
+/**
+ * Exemplo de API Route para enviar eventos Kwai Server-Side
+ * 
+ * Renomeie este arquivo para route.ts para ativar
+ * 
+ * Local: app/api/kwai-webhook/route.ts
+ */
+
+import { NextRequest, NextResponse } from 'next/server'
+import { sendPurchaseEvent, sendCompleteRegistrationEvent } from '@/lib/kwai-server-api'
+
+/**
+ * POST /api/kwai-webhook
+ * 
+ * Webhook para enviar eventos Kwai server-side
+ * 
+ * Body:
+ * {
+ *   "event_type": "purchase" | "registration",
+ *   "pixel_id": "SEU_PIXEL_ID",
+ *   "access_token": "SEU_ACCESS_TOKEN",
+ *   "value": 100,
+ *   "transaction_id": "TXN-123",
+ *   "clickid": "ABC123"
+ * }
+ */
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json()
+    const { 
+      event_type, 
+      pixel_id, 
+      access_token, 
+      value, 
+      transaction_id,
+      clickid,
+      mmpcode,
+      payment_method,
+      registration_method
+    } = body
+
+    // Validar dados obrigatórios
+    if (!event_type || !pixel_id || !access_token) {
+      return NextResponse.json(
+        { success: false, error: 'Dados obrigatórios faltando' },
+        { status: 400 }
+      )
+    }
+
+    const config = { pixel_id, access_token }
+
+    // Processar evento baseado no tipo
+    switch (event_type) {
+      case 'purchase':
+        if (!value || !transaction_id) {
+          return NextResponse.json(
+            { success: false, error: 'value e transaction_id são obrigatórios para purchase' },
+            { status: 400 }
+          )
+        }
+
+        await sendPurchaseEvent(config, {
+          value: parseFloat(value),
+          transaction_id,
+          clickid,
+          mmpcode,
+          payment_method,
+        })
+        break
+
+      case 'registration':
+        await sendCompleteRegistrationEvent(config, {
+          clickid,
+          mmpcode,
+          registration_method,
+        })
+        break
+
+      default:
+        return NextResponse.json(
+          { success: false, error: 'event_type inválido' },
+          { status: 400 }
+        )
+    }
+
+    return NextResponse.json({ success: true })
+
+  } catch (error) {
+    console.error('[Kwai Webhook] Erro:', error)
+    return NextResponse.json(
+      { success: false, error: error instanceof Error ? error.message : 'Erro desconhecido' },
+      { status: 500 }
+    )
+  }
+}
+
+/**
+ * Exemplo de uso no frontend:
+ * 
+ * ```typescript
+ * // Após depósito confirmado
+ * await fetch('/api/kwai-webhook', {
+ *   method: 'POST',
+ *   headers: { 'Content-Type': 'application/json' },
+ *   body: JSON.stringify({
+ *     event_type: 'purchase',
+ *     pixel_id: 'SEU_PIXEL_ID',
+ *     access_token: 'SEU_ACCESS_TOKEN',
+ *     value: 100,
+ *     transaction_id: 'TXN-123',
+ *     clickid: sessionStorage.getItem('kwai_clickid'),
+ *     mmpcode: sessionStorage.getItem('kwai_mmpcode'),
+ *     payment_method: 'pix'
+ *   })
+ * })
+ * ```
+ */
+
