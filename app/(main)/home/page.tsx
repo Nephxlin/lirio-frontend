@@ -1,11 +1,11 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import dynamic from 'next/dynamic'
 import { useSearchParams } from 'next/navigation'
 import BannerCarousel from '@/components/home/BannerCarousel'
 import { useAuth } from '@/contexts/AuthContext'
-import { useKwaiPageView } from '@/lib/hooks/useKwaiPageView'
+// import { useKwaiPageView } from '@/lib/hooks/useKwaiPageView' // Não é mais necessário - contentView dispara automaticamente
 import api from '@/lib/api'
 
 // Dynamic imports para componentes pesados (lazy loading)
@@ -30,15 +30,15 @@ const LoginModal = dynamic(() => import('@/components/modals/LoginModal'), {
   ssr: false,
 })
 
-export default function HomePage() {
+function HomePageContent() {
   const { isAuthenticated, isLoading: authLoading } = useAuth()
   const searchParams = useSearchParams()
   const [showLoginModal, setShowLoginModal] = useState(false)
   const [referralCode, setReferralCode] = useState<string | null>(null)
   const [referrerInfo, setReferrerInfo] = useState<any>(null)
   
-  // 🔥 Rastrear visualização da página home
-  useKwaiPageView('home_page', { content_type: 'landing_page' })
+  // 🔥 Rastrear visualização da página home (DESATIVADO - agora dispara automaticamente no KwaiPixelLoader)
+  // useKwaiPageView('home_page', { content_type: 'landing_page' })
 
   // Detectar código de referência na URL
   useEffect(() => {
@@ -95,6 +95,20 @@ export default function HomePage() {
         onOpenRegister={() => setShowLoginModal(true)}
       />
     </div>
+  )
+}
+
+export default function HomePage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen">
+        <div className="container mx-auto px-4 py-6">
+          <div className="h-48 bg-dark-100/50 animate-pulse rounded-lg" />
+        </div>
+      </div>
+    }>
+      <HomePageContent />
+    </Suspense>
   )
 }
 

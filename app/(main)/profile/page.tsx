@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useWallet } from '@/contexts/WalletContext'
-import { useKwaiPageView } from '@/lib/hooks/useKwaiPageView'
+// import { useKwaiPageView } from '@/lib/hooks/useKwaiPageView' // Não é mais necessário - contentView dispara automaticamente
 import { User, Wallet, History, Heart, Edit, Sparkles, Users, Copy, Check } from 'lucide-react'
 import { formatCurrency, formatCPF, formatPhone, formatDateTime, getInitials } from '@/lib/utils'
 import { Deposit, Withdrawal, Game } from '@/types'
@@ -13,7 +13,6 @@ import toast from 'react-hot-toast'
 import WithdrawModal from '@/components/modals/WithdrawModal'
 import RolloverProgress from '@/components/wallet/RolloverProgress'
 import OptimizedImage from '@/components/common/OptimizedImage'
-import { getImageUrl } from '@/lib/image-utils'
 
 export default function ProfilePage() {
   const { user, refreshUser } = useAuth()
@@ -28,8 +27,8 @@ export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false)
   const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false)
   
-  // 🔥 Rastrear visualização da página de perfil
-  useKwaiPageView('profile_page', { content_type: 'profile' })
+  // 🔥 Rastrear visualização da página de perfil (DESATIVADO - agora dispara automaticamente no KwaiPixelLoader)
+  // useKwaiPageView('profile_page', { content_type: 'profile' })
   const [editForm, setEditForm] = useState({
     name: user?.name || '',
     phone: user?.phone || '',
@@ -149,7 +148,7 @@ export default function ProfilePage() {
               <div className="relative w-24 h-24 rounded-full bg-gradient-casino flex items-center justify-center text-white text-3xl font-bold overflow-hidden">
                 {user.avatar ? (
                   <OptimizedImage
-                    src={getImageUrl(user.avatar)}
+                    src={`http://localhost:3000${user.avatar}`}
                     alt={user.name}
                     fill
                     sizes="96px"
@@ -540,7 +539,7 @@ export default function ProfilePage() {
                       <div key={game.id} className="card p-3">
                         <div className="relative w-full aspect-square mb-2 rounded-lg overflow-hidden">
                           <OptimizedImage
-                          src={getImageUrl(game.cover)}
+                          src={`http://localhost:3000${game.cover}`}
                           alt={game.name}
                             fill
                             sizes="(max-width: 768px) 50vw, 33vw"

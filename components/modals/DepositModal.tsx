@@ -9,7 +9,7 @@ import api from '@/lib/api'
 import toast from 'react-hot-toast'
 import { QRCodeSVG } from 'qrcode.react'
 import { formatCurrency } from '@/lib/utils'
-import { useKwaiTracker } from '@/lib/hooks/useKwaiTracker'
+import { useKwaiPixelContext } from '@/contexts/KwaiPixelContext'
 
 interface DepositModalProps {
   isOpen: boolean
@@ -22,7 +22,7 @@ const SUGGESTED_VALUES = [5,10, 20, 30, 50, 100, 200, 500, 1000]
 export default function DepositModal({ isOpen, onClose }: DepositModalProps) {
   const { user } = useAuth()
   const { refreshWallet } = useWallet()
-  const { trackInitiatedCheckout, trackPurchase } = useKwaiTracker()
+  const { trackCheckout, trackPurchase } = useKwaiPixelContext()
   const [amount, setAmount] = useState('')
   const [selectedValue, setSelectedValue] = useState<number | null>(null)
   const [acceptBonus, setAcceptBonus] = useState(true)
@@ -181,9 +181,11 @@ export default function DepositModal({ isOpen, onClose }: DepositModalProps) {
         setQrCodeExpiration(300) // Reset do contador de 5 minutos
         setIsQrCodeExpired(false)
         
-        // 🔥 Rastrear início do checkout (QR Code gerado)
-        trackInitiatedCheckout(parseFloat(amount), data.idTransaction, 'BRL')
-        
+        // 🎯 Rastrear início de checkout no Kwai Pixel
+        trackCheckout(parseFloat(amount), data.idTransaction, 'BRL').catch(err => {
+          console.warn('[Kwai] Erro ao rastrear checkout:', err)
+        })
+
         toast.success('QR Code gerado com sucesso!')
       }
     } catch (error: any) {
@@ -207,14 +209,16 @@ export default function DepositModal({ isOpen, onClose }: DepositModalProps) {
         if (status === 1 || paid === true) {
           // Aprovado
           const depositAmount = parseFloat(amount)
-          
-          // 🔥 Rastrear conversão de compra/depósito
-          trackPurchase(depositAmount, qrcodeData.idTransaction, 'BRL')
-          
+
           // 💾 Salvar data do último depósito no localStorage para tracking de re-purchase
           const lastDepositDate = new Date().toISOString()
           localStorage.setItem('kwai_last_deposit_date', lastDepositDate)
           localStorage.setItem('kwai_last_deposit_amount', depositAmount.toString())
+          
+          // 🎯 Rastrear compra completa no Kwai Pixel
+          trackPurchase(depositAmount, qrcodeData.idTransaction, 'BRL', 'pix').catch(err => {
+            console.warn('[Kwai] Erro ao rastrear compra:', err)
+          })
           
           toast.success('Depósito aprovado! Saldo atualizado.')
           await refreshWallet()

@@ -36,10 +36,11 @@ export default function MainLayout({
   const [loginMode, setLoginMode] = useState<'login' | 'register'>('login')
 
   useEffect(() => {
-    // Redirecionar para login se não estiver autenticado
-    // Exceto na página home que pode ser pública
+    // Home é completamente pública - sem redirecionamento
+    // Outras páginas podem exigir autenticação se necessário
     if (!isLoading && !isAuthenticated && pathname !== '/home') {
-      router.push('/home')
+      // Não redireciona - permite acesso público
+      // router.push('/home')
     }
   }, [isAuthenticated, isLoading, pathname, router])
 
@@ -54,13 +55,14 @@ export default function MainLayout({
     }
   }, [isNewUser, isAuthenticated, isLoading])
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-dark-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-500"></div>
-      </div>
-    )
-  }
+  // Remover loading screen - permite acesso imediato
+  // if (isLoading) {
+  //   return (
+  //     <div className="min-h-screen bg-dark-50 flex items-center justify-center">
+  //       <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-500"></div>
+  //     </div>
+  //   )
+  // }
 
   // Verificar se está em uma página de jogo
   const isGamePage = pathname?.startsWith('/games/')

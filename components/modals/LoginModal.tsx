@@ -9,7 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { validateCPF } from '@/lib/utils'
 import api from '@/lib/api'
-import { useKwaiTracker } from '@/lib/hooks/useKwaiTracker'
+import { useKwaiPixelContext } from '@/contexts/KwaiPixelContext'
 
 const loginSchema = z.object({
   email: z.string().min(1, 'E-mail ou CPF é obrigatório'),
@@ -52,7 +52,7 @@ interface LoginModalProps {
 
 export default function LoginModal({ isOpen, onClose, initialMode = 'register', referralCode, referrerInfo }: LoginModalProps) {
   const { login, register: registerUser } = useAuth()
-  const { trackCompleteRegistration, trackContentView } = useKwaiTracker()
+  const { trackRegistration } = useKwaiPixelContext()
   const [mode, setMode] = useState<'login' | 'register'>(initialMode)
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
@@ -65,8 +65,7 @@ export default function LoginModal({ isOpen, onClose, initialMode = 'register', 
       setMode(referralCode ? 'register' : initialMode)
       loadSignupBonus()
     }
-    trackContentView({ content_name: 'modal_login' })
-  }, [isOpen, initialMode, referralCode, trackContentView])
+  }, [isOpen, initialMode, referralCode])
 
   const loadSignupBonus = async () => {
     try {
@@ -130,13 +129,11 @@ export default function LoginModal({ isOpen, onClose, initialMode = 'register', 
         acceptSignupBonus: data.acceptBonus !== false, // Se não desmarcou, aceita
       })
       
-      // 🔥 Rastrear registro completo no Kwai
-      trackCompleteRegistration({
-        registration_method: referralCode ? 'referral' : 'direct',
-        has_referral_bonus: data.acceptBonus || false,
-        content_name: 'cadastro_concluido',
+      // 🎯 Rastrear registro completo no Kwai Pixel
+      trackRegistration().catch(err => {
+        console.warn('[Kwai] Erro ao rastrear registro:', err)
       })
-      
+
       // O AuthContext já salva o token e redireciona para /home
       onClose()
     } catch (error: any) {
