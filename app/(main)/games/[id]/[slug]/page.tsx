@@ -5,7 +5,7 @@ import { useRouter, useParams } from 'next/navigation'
 import { X, Loader2, Trophy, EyeOff, ArrowLeft, Gamepad2 } from 'lucide-react'
 import { useWallet } from '@/contexts/WalletContext'
 // import { useKwaiPageView } from '@/lib/hooks/useKwaiPageView' // Não é mais necessário - contentView dispara automaticamente
-import { formatCurrency } from '@/lib/utils'
+import { formatCurrency, slugify } from '@/lib/utils'
 import api from '@/lib/api'
 import toast from 'react-hot-toast'
 import GameWinsCarousel from '@/components/games/GameWinsCarousel'
@@ -238,7 +238,7 @@ export default function GamePage() {
               {categoryGames.map((game) => (
                 <button
                   key={game.id}
-                  onClick={() => router.push(`/games/${game.id}/${game.slug}`)}
+                  onClick={() => router.push(`/games/${game.id}/${slugify(game.name)}`)}
                   className={`p-2 rounded-lg border transition-all hover:scale-105 group ${
                     game.id === parseInt(params.id as string)
                       ? 'border-gold-500 bg-gradient-to-br from-gold-500/20 to-gold-400/20 shadow-lg shadow-gold-500/20'
