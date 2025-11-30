@@ -73,25 +73,35 @@ export default function BannerCarousel() {
         {banners.map((banner) => (
           <SwiperSlide key={banner.id}>
             <div
-              className="relative w-full h-64 md:h-96 cursor-pointer group"
+              className="relative w-full h-64 md:h-96 cursor-pointer group overflow-hidden"
               onClick={() => {
                 if (banner.link) {
                   window.open(banner.link, '_blank')
                 }
               }}
             >
+              {/* Background gradiente sempre visível */}
+              <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a2e] via-[#16213e] to-[#0f172a]" />
+              
+              {/* Imagem do banner */}
               <img
                 src={getImageUrl(banner.image)}
                 alt={banner.title}
-                className="w-full h-full object-cover"
+                className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300"
+                onLoad={(e) => {
+                  e.currentTarget.style.opacity = '1'
+                }}
                 onError={(e) => {
                   // Previne loop infinito - remove o handler de erro após a primeira falha
                   e.currentTarget.onerror = null
-                  // Esconde a imagem e mostra apenas o background com o texto
-                  e.currentTarget.style.display = 'none'
+                  // Esconde a imagem suavemente para mostrar o gradiente
+                  e.currentTarget.style.opacity = '0'
                 }}
+                style={{ opacity: 0 }}
               />
-              <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a2e] via-[#16213e] to-[#0f172a]">
+              
+              {/* Overlay escuro sobre a imagem para melhor legibilidade do texto */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent">
                 <div className="absolute bottom-0 left-0 p-6 md:p-8">
                   <h3 className="text-2xl md:text-4xl font-bold text-white mb-2">
                     {banner.title}

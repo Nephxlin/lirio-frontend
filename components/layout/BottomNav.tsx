@@ -163,15 +163,22 @@ export default function BottomNav({ onOpenDeposit }: BottomNavProps) {
       />
       
       {/* Spacer para evitar que o conteúdo fique por baixo do menu */}
-      <div className="h-12 md:h-0" />
+      <div className="h-16 md:h-0" />
       
       {/* Bottom Navigation */}
       <motion.nav
         initial={{ y: 100 }}
         animate={{ y: 0 }}
         transition={{ type: 'spring', damping: 20 }}
-        className="fixed bottom-0 left-0 right-0 z-50 md:hidden border-t border-gold-500/30 shadow-xl backdrop-blur-md"
-        style={{ backgroundColor: '#0a0a0a' }}
+        className="fixed bottom-0 left-0 right-0 md:hidden border-t border-gold-500/30 shadow-2xl backdrop-blur-md"
+        style={{ 
+          backgroundColor: '#0a0a0a',
+          zIndex: 9999,
+          isolation: 'isolate',
+          pointerEvents: 'auto',
+          WebkitTransform: 'translateZ(0)',
+          transform: 'translateZ(0)'
+        }}
       >
         <AnimatePresence mode="wait">
           {isInGameRoute ? (
@@ -182,7 +189,7 @@ export default function BottomNav({ onOpenDeposit }: BottomNavProps) {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.3 }}
-              className="flex items-center justify-between px-6 py-1.5"
+              className="flex items-center justify-between px-6 py-2.5"
             >
               {/* Seta Esquerda - Jogo Anterior */}
               <motion.button

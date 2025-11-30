@@ -170,7 +170,7 @@ export default function GamePage() {
   }
 
   return (
-    <div className="h-full bg-black flex flex-col relative overflow-hidden">
+    <div className="min-h-screen bg-black flex flex-col relative pb-16 md:pb-0">
       {/* Header do Jogo - Apenas Mobile */}
       <div className="md:hidden bg-dark-100 border-b border-dark-200 px-4 py-2.5 flex items-center justify-between relative z-50 flex-shrink-0">
         <button
@@ -222,7 +222,7 @@ export default function GamePage() {
       </div>
 
       {/* Layout Desktop: Lista Jogos + Game + Timeline Vertical */}
-      <div className="flex-1 flex relative min-h-0 overflow-hidden">
+      <div className="flex-1 flex relative overflow-hidden" style={{ minHeight: 'calc(100vh - 120px)' }}>
         {/* Lista de Jogos da Categoria - Desktop */}
         <div className="hidden md:flex w-96 bg-dark-100 border-r border-gold-500/30 flex-col flex-shrink-0 overflow-hidden z-10">
           <div className="p-4 border-b border-gold-500/30 bg-dark-200/50 backdrop-blur-sm flex-shrink-0">
@@ -277,17 +277,19 @@ export default function GamePage() {
         </div>
 
         {/* Game Iframe */}
-        <div className="flex-1 relative min-w-0 min-h-0 z-0" style={{ overflow: 'hidden' }}>
+        <div className="flex-1 relative min-w-0 z-0" style={{ minHeight: 'calc(100vh - 120px)' }}>
           <iframe
             src={gameUrl}
-            className="w-full h-full"
-            style={{ 
-              border: 'none',
-              pointerEvents: 'auto'
-            }}
-            allow="autoplay; fullscreen; payment; clipboard-write"
+            className="w-full h-full border-0"
+            allow="autoplay; fullscreen; encrypted-media; gyroscope; accelerometer; picture-in-picture; clipboard-read; clipboard-write"
             allowFullScreen
             title="Game"
+            style={{ 
+              display: 'block',
+              isolation: 'isolate',
+              position: 'relative',
+              zIndex: 1
+            }}
           />
         </div>
 

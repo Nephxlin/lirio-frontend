@@ -68,7 +68,7 @@ export default function MainLayout({
   const isGamePage = pathname?.startsWith('/games/')
 
   return (
-    <div className={`${isGamePage ? 'h-screen' : 'min-h-screen'} flex flex-col overflow-hidden`}>
+    <div className={`${isGamePage ? 'h-screen' : 'min-h-screen'} flex flex-col relative`} style={{ overflow: isGamePage ? 'hidden' : 'auto' }}>
       <Header
         onOpenDeposit={() => setShowDepositModal(true)}
         onOpenWithdraw={() => setShowWithdrawModal(true)}
@@ -81,10 +81,10 @@ export default function MainLayout({
           setShowLoginModal(true)
         }}
       />
-      <main className={`flex-1 ${isGamePage ? 'overflow-hidden' : ''}`}>{children}</main>
+      <main className={`flex-1 relative ${isGamePage ? 'overflow-hidden' : ''}`}>{children}</main>
       {!isGamePage && <Footer />}
       
-      {/* Bottom Navigation Mobile */}
+      {/* Bottom Navigation Mobile - Sempre visível e acima de tudo */}
       <BottomNav onOpenDeposit={() => setShowDepositModal(true)} />
 
       {/* Modals */}

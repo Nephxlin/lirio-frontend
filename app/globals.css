@@ -61,3 +61,26 @@
 ::-webkit-scrollbar-thumb:hover {
   @apply bg-primary-600;
 }
+
+/* Garantir que iframes não sobreponham elementos fixos como BottomNav */
+@layer utilities {
+  iframe {
+    position: relative;
+    z-index: 1;
+    isolation: isolate;
+  }
+  
+  /* Forçar contexto de empilhamento para navegação fixa */
+  nav[class*="fixed"] {
+    isolation: isolate;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+  
+  /* Garantir que o mobile bottom nav sempre fique visível */
+  @media (max-width: 768px) {
+    body {
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+  }
+}
