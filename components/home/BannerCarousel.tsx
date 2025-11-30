@@ -85,11 +85,13 @@ export default function BannerCarousel() {
                 alt={banner.title}
                 className="w-full h-full object-cover"
                 onError={(e) => {
-                  // Fallback para imagem placeholder
-                  e.currentTarget.src = 'https://via.placeholder.com/1920x400/1a1a2e/eeba0b?text=Banner'
+                  // Previne loop infinito - remove o handler de erro após a primeira falha
+                  e.currentTarget.onerror = null
+                  // Esconde a imagem e mostra apenas o background com o texto
+                  e.currentTarget.style.display = 'none'
                 }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent">
+              <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a2e] via-[#16213e] to-[#0f172a]">
                 <div className="absolute bottom-0 left-0 p-6 md:p-8">
                   <h3 className="text-2xl md:text-4xl font-bold text-white mb-2">
                     {banner.title}
